@@ -1,6 +1,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Perpustakaan - SMP Negeri Unggulan Sindang</title>
   <meta content="" name="description">
@@ -25,6 +26,8 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('admin/css/style.css')}}" rel="stylesheet">
+
+  @stack('css')
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.3.1

@@ -1,51 +1,88 @@
 @extends('layouts.admin')
 
 @section('content')
-<a href="/admin/tambah/databuku" class="btn btn-primary" title="Tambah" data-toggle="tooltip">
-    <i class="fas fa-plus mr-2"></i> Tambah Data Buku
-  </a>
-<div class="card">
-    <div class="card-body">
-      <h5 style="text-align: justify" class="card-title">Data Buku Perpustakaan</h5>
+<x-admin-page-component>
+	@slot('currentPage')
+		Data Buku
+	@endslot
 
-      <!-- Table with stripped rows -->
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Judul</th>
-            <th scope="col">Kategori</th>
-            <th scope="col">Pengarang</th>
-            <th scope="col">Penerbit</th>
-            <th scope="col">Tahun Terbit</th>
-            <th scope="col">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach ($dataBuku as $data)
-            <tr>
-                <th scope="row">{{ $loop->iteration }}</th>
-                <td>{{ $data->judul }}</td>
-                <td>{{ $data->jb }}</td>
-                <td>{{ $data->pengarang }}</td>
-                <td>{{ $data->penerbit }}</td>
-                <td>{{ $data->th_terbit }}</td>
-                <td>
-                    <div class="d-flex align-items-center">
-                      <a href="/admin/edit/databuku/{{$data->id}}" type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-                        Edit
-                        <i class="typcn typcn-edit btn-icon-append"></i>
-                      </a>
-                      <a href="/admin/databuku/delete/{{$data->id}}" class="btn btn-danger btn-sm mr-2" title="Hapus" data-toggle="tooltip" onclick="return confirm('Anda yakin mau menghapus data buku {{$data->judul}} ?')"> Delete<i class="typcn typcn-delete-outline btn-icon-append"></i></a>
-                    </div>
-                  </td>
-            </tr>
-            @endforeach
-        </tbody>
-      </table>
-      <!-- End Table with stripped rows -->
+	@slot('breadcrumb')
+        <li class="breadcrumb-item active" aria-current="page">Data Buku</li>
+    @endslot
 
-    </div>
-  </div>
+	@slot('actionButton')
+		<a href="{{ route('admin.data-buku.create') }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip">
+			<i class="bi bi-plus mr-2"></i> Tambah Data Buku
+		</a>
+	@endslot
 
+	@slot('content')    
+		<div class="card">
+			<div class="card-header mb-5">
+				<span class="card-title">Data Rak</span>
+			</div>
+			<div class="card-body">
+				<x-datatable-component> 
+					@slot('columns')
+						<th scope="col">Cover</th>
+						<th scope="col">Judul</th>
+						<th scope="col">Kategori</th>
+						<th scope="col">Pengarang</th>
+						<th scope="col">Penerbit</th>
+						<th scope="col">Tahun</th>
+                        <th scope="col">Jumlah</th>
+					@endslot
+				</x-datatable-component>
+			</div>
+		</div>
+	@endslot
+</x-admin-page-component>
 @endsection
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+@endpush
+@push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        var datatable = $('#datatables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "",
+            columns: [
+                {data: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'cover', name: 'cover'},
+				{data: 'judul', name: 'judul'},
+				{data: 'kategori', name: 'kategori'},
+                {data: 'pengarang', name: 'pengarang'},
+				{data: 'penerbit', name: 'penerbit'},
+				{data: 'th_terbit', name: 'th_terbit'},
+                {data: 'jumlah', name: 'jumlah'},
+                {data: 'status', name: 'status'},
+                {data: 'action', name: 'action', orderable: false, seacrhable: false}
+            ],
+            columnDefs: [
+                {
+                    "targets": 9,
+                    "className": "text-center",
+                },
+            ]
+        });
+
+        function destroy(e) {
+            var url = '{{ route("admin.data-buku.destroy", ":id") }}';
+            url = url.replace(':id', e);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url    : url,
+                type   : "delete",
+                success: function(data) {
+                    $('#datatables').DataTable().ajax.reload();
+                }
+            })
+        }
+    </script>
+@endpush

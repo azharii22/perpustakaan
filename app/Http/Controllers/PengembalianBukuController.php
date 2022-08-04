@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PemingembalianBukuController extends Controller
+class PengembalianBukuController extends Controller
 {
     public function index() 
     {

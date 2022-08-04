@@ -1,6 +1,7 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
+<script src="{{ asset('plugins/jquery/jquery.js') }}"></script>
 <script src="{{ asset('admin/vendor/apexcharts/apexcharts.min.js')}}"></script>
 <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ asset('admin/vendor/chart.js/chart.min.js')}}"></script>
@@ -12,3 +13,14 @@
 
 <!-- Template Main JS File -->
 <script src="{{ asset('admin/js/main.js')}}"></script>
+<script>
+    $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        })
+    });
+</script>
+
+@stack('js')
