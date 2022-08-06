@@ -2,13 +2,13 @@
 <html lang="en">
 
 @section ('head')
-    @include ('layouts.siswa.head')
+    @include('layouts.siswa.head')
 @show
-
+@stack('css')
 <body>
 
 @section ('header')
-    @include ('layouts.siswa.header')
+    @include('layouts.siswa.header')
 @show
 
   <main id="main">
@@ -25,6 +25,6 @@
     @include ('layouts.siswa.js')
 @show
 
+@stack('js')
 </body>
-
 </html>

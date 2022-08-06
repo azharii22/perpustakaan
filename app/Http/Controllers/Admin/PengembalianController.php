@@ -28,6 +28,9 @@ class PengembalianController extends Controller
                 ->addColumn('buku', function ($row) {
                     return $row->buku->judul;
                 })
+                ->addColumn('kode_buku', function ($row) {
+                    return $row->buku->kode_buku;
+                })
                 ->addColumn('tanggal_diambil', function ($row) {
                     return $row->tanggal_diambil->format('d/m/Y');
                 })

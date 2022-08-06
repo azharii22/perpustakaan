@@ -30,7 +30,9 @@ class DashboardController extends Controller
         //
         $kategori   = DataKategori::query();
         $labels     = $kategori->pluck('name');
-        $peminjaman = $kategori->withCount('bukuPeminjaman')->pluck('buku_peminjaman_count')->toArray();
+        $peminjaman = $kategori->withCount(['bukuPeminjaman', 'bukuPeminjaman as buku_peminjaman_count' => function ($q) {
+            $q->where('status', 'DIPINJAM')->orwhere('status', 'DIPERPANJANG');
+        }])->pluck('buku_peminjaman_count')->toArray();
         $datasets = [$labels, $peminjaman];
 
         return view('admin.dashboard', compact('totalAnggota', 'totalBukuTersedia', 'totalBukuDipinjam', 'totalKoleksiBuku', 'totalPeminjamanTerlambat', 'aktifitasaPeminjaman', 'labels', 'datasets'));

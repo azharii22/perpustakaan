@@ -17,6 +17,7 @@ class CreateDataBukusTable extends Migration
             $table->id();
             $table->foreignId('data_kategori_id')->constrained()->onDelete('cascade');
             $table->foreignId('data_rak_id')->constrained()->onDelete('cascade');
+            $table->string('kode_buku')->unique();
             $table->string('judul');
             $table->string('slug');
             $table->integer('jumlah')->default(1);

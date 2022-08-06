@@ -24,6 +24,7 @@
                     @slot('columns')
                         <th>Kode Peminjaman</th>
                         <th>Oleh</th>
+                        <th>Kode Buku</th>
                         <th>Judul Buku</th>
                         <th>Tanggal Akan Diambil</th>
                         <th>Tanggal Pengambilan</th>
@@ -51,6 +52,7 @@
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'kode_peminjaman', name: 'kode_peminjaman'},
                 {data: 'user', name: 'user'},
+                {data: 'kode_buku', name: 'kode_buku'},
                 {data: 'buku', name: 'buku'},
                 {data: 'tanggal_diambil', name: 'tanggal_diambil'},
                 {data: 'tanggal_pengambilan', name: 'tanggal_pengambilan'},
@@ -65,11 +67,11 @@
                     "targets": "_all"
                 },
                 {
-                    "targets": 9,
+                    "targets": 10,
                     "className": 'text-center'
                 },
                 {
-                    "targets": 8,
+                    "targets": 9,
                     "className": 'text-center'
                 }
             ]

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PeminjamanController;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\PerpanjanganController;
@@ -13,6 +13,10 @@ use App\Http\Controllers\Admin\DataBukuController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\RakController;
 
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\SirkulasiController;
+use App\Http\Controllers\UpdateProfileController;
+use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\CreatePeminjamanController;
 use App\Http\Controllers\StorePeminjamanController;
 
@@ -28,51 +32,41 @@ use App\Http\Controllers\StorePeminjamanController;
 |
 */
 
-Route::get('/', function () {
-    return view('siswa.beranda.index');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+Route::get('/', function () {
+    return view('siswa.beranda.index');
+})->name('welcome');
+Route::get('/beranda', [PagesController::class, 'beranda'])->name('beranda');
+Route::get('/tentang', [PagesController::class, 'tentang'])->name('tentang');
+Route::get('/profile', [PagesController::class, 'profile'])->name('profile');
+Route::post('/profile/update', UpdateProfileController::class)->name('profile-update');
+Route::post('/profile/password/update', UpdatePasswordController::class)->name('password-update');
+Route::get('/katalogbuku', [PagesController::class, 'katalog'])->name('katalogbuku.index');
+Route::get('/katalogbuku/{id}', [PagesController::class, 'katalogShow'])->name('katalogbuku.show');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/buat-peminjaman/{id}', CreatePeminjamanController::class)->name('create-peminjaman');
+    Route::post('/buat-peminjaman', StorePeminjamanController::class)->name('store-peminjaman');
+    Route::get('/peminjaman-buku', [SirkulasiController::class, 'peminjaman'])->name('peminjaman-buku');
+    Route::get('/pengembalian-buku', [SirkulasiController::class, 'pengembalian'])->name('pengembalian-buku');
+});
 
 Route::prefix('admin')->as('admin.')->middleware('is_admin')->group(function () {
-    //
     Route::get('dashboard', DashboardController::class)->name('dashboard');
-    //
+    Route::get('profile', ProfileController::class)->name('profile');
     Route::resources([
         'data-pengembalian'     => PengembalianController::class,
         'data-perpanjangan'     => PerpanjanganController::class,
-    ], [
-		'only' => ['index', 'edit', 'update']
-	]);
+    ], ['only' => ['index', 'edit', 'update']]);
 
     Route::resources([
         'data-peminjaman'       => PeminjamanController::class,
         'data-pengembalian'     => PengembalianController::class,
         'data-perpanjangan'     => PerpanjanganController::class,
-        //
-        'data-anggota'  => AnggotaController::class,
-        //
-        'data-buku'     => DataBukuController::class,
-        'data-kategori' => KategoriController::class,
-        'data-rak'      => RakController::class,
+        'data-anggota'          => AnggotaController::class,
+        'data-buku'             => DataBukuController::class,
+        'data-kategori'         => KategoriController::class,
+        'data-rak'              => RakController::class,
     ]);
 });
-
-
-Route::get('/siswa', [App\Http\controllers\SiswaController::class, 'index'])->name('siswa');
-
-Route::resource('katalogbuku', App\Http\Controllers\KatalogBukuController::class);
-
-Route::get('/buat-peminjaman/{id}', CreatePeminjamanController::class)->name('create-peminjaman');
-Route::post('/buat-peminjaman', StorePeminjamanController::class)->name('store-peminjaman');
-
-Route::get('/beranda', [App\Http\controllers\BerandaController::class, 'index'])->name('beranda');
-Route::get('/tentang', [App\Http\controllers\TentangController::class, 'index'])->name('tentang');
-// Route::get('/katalogbuku', [App\Http\controllers\KatalogBukuController::class, 'index'])->name('katalogbuku');
-Route::get('/sirkulasi', [App\Http\controllers\SirkulasiController::class, 'index'])->name('sirkulas');
-Route::get('/profile', [App\Http\controllers\ProfileController::class, 'index'])->name('profile');
-Route::get('/peminjamanbuku', [App\Http\controllers\PeminjamanBukuController::class, 'index'])->name('peminjamanbuku');
-Route::get('/pengembalianbuku', [App\Http\controllers\PengembalianBukuController::class, 'index'])->name('pengembalianbuku');

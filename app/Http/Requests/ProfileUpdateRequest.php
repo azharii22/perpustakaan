@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AnggotaUpdateRequest extends FormRequest
+class ProfileUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,11 @@ class AnggotaUpdateRequest extends FormRequest
     {
         return [
             'name'      => 'required|string',
-            'username'  => 'required|unique:users,username,'.$this->username.',username',
             'email'     => 'required|unique:users,email,'.$this->email.',email',
-            'kelas'     => 'required',
-            'tanggal_lahir' => 'required',
+            'kelas'     => 'nullable',
+            'tanggal_lahir' => 'nullable',
             'phone'     => 'nullable|numeric',
             'address'   => 'nullable',
-            'password'  => 'required|confirmed'
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AnggotaStoreRequest extends FormRequest
+class PasswordUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,6 @@ class AnggotaStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|string',
-            'username'  => 'required|unique:users,username',
-            'email'     => 'required|unique:users,email',
-            'kelas'     => 'required',
-            'tanggal_lahir' => 'required',
-            'phone'     => 'nullable|numeric',
-            'address'   => 'nullable',
             'password'  => 'required|confirmed'
         ];
     }

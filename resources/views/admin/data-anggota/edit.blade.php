@@ -21,9 +21,27 @@
         @method('PUT')
 
         <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">ID Anggota</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="username">
+            </div>
+        </div>
+        <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="name" value="{{ $data_anggota->name }}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Kelas</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="kelas">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Tanggal Lahir</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" name="tanggal_lahir">
             </div>
         </div>
         <div class="row mb-3">

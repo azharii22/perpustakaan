@@ -29,17 +29,12 @@ class Peminjaman extends Model
 
         static::creating(function ($model) {
             // FORMAT KODE PEMINJAMAN : USER_ID/CREATED_AT/000x
-            $user_id    = auth()->user()->id;
+            $user_id    = auth()->user()->id ?? 2;
             $date       = \Carbon\Carbon::now()->format('dmy');
             $lastID     = $model->whereDate('created_at', \Carbon\Carbon::today())->orderByDesc('created_at')->count();
 
-            $model->kode_peminjaman = 'PJM/'.$date.'/'.$user_id.'/000'.str_pad($lastID+1, 3);
+            $model->kode_peminjaman = 'PJM/'.$date.'/'.$user_id.'/'.str_pad($lastID+1, 3, '0', STR_PAD_LEFT);
         });
-    }
-
-    public function scopeAvailable($query)
-    {
-        $query->where('jumlah', '>=', 0);
     }
 
     public function scopeBaru($query)

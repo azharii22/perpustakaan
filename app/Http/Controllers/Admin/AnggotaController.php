@@ -26,9 +26,9 @@ class AnggotaController extends Controller
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
                     if (!$row->trashed()) {
-                        return 'Aktif';
+                        return '<span class="badge bg-success">Aktif</span>';
                     } else {
-                        return 'Non-Aktif';
+                        return '<span class="badge bg-danger">Non-Aktif</span>';
                     }
                 })
                 ->addColumn('action', function ($row) {

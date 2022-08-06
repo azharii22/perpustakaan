@@ -28,6 +28,9 @@ class PerpanjanganController extends Controller
                 ->addColumn('buku', function ($row) {
                     return $row->buku->judul;
                 })
+                ->addColumn('kode_buku', function ($row) {
+                    return $row->buku->kode_buku;
+                })
                 ->addColumn('tanggal_diambil', function ($row) {
                     return $row->tanggal_diambil->format('d/m/Y');
                 })
@@ -38,23 +41,16 @@ class PerpanjanganController extends Controller
                     return $row->tanggal_pengembalian->format('d/m/Y');
                 })
                 ->addColumn('tanggal_pengembalian_aktual', function ($row) {
-                    if($row->tanggal_pengembalian_aktual > $row->tanggal_pengembalian || $row->tanggal_pengembalian < \Carbon\Carbon::now()) {
-                        return $row->tanggal_pengembalian_aktual->format('d/m/Y').'<span class="badge bg-danger mx-4">TELAT</span>';    
-                    } else {
-                        return $row->tanggal_pengembalian_aktual->format('d/m/Y');
+                    if($row->tanggal_pengembalian_aktual) {
+                        if($row->tanggal_pengembalian_aktual > $row->tanggal_pengembalian || $row->tanggal_pengembalian < \Carbon\Carbon::now()) {
+                            return $row->tanggal_pengembalian_aktual->format('d/m/Y').'<span class="badge bg-danger mx-4">TELAT</span>';    
+                        } else {
+                            return $row->tanggal_pengembalian_aktual->format('d/m/Y');
+                        }
                     }
-                    
                 })
                 ->addColumn('status', function ($row) {
                     return '<span class="badge bg-dark">'.$row->status.'</span>';
-                })
-                ->addColumn('action', function ($row) {
-                    if($row->status === 'BERHASIL' || $row->status === 'TOLAK') {
-                        $edit = '';
-                    } else {
-                        $edit = '<a href="'.route('admin.data-peminjaman.edit', $row->id).'" class="btn btn-secondary btn-sm">PENGAMBILAN</a>'; 
-                    }
-                    return $edit;
                 })
                 ->rawColumns(['status', 'action'])
                 ->make(true);

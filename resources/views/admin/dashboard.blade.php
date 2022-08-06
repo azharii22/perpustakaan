@@ -148,7 +148,6 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: datasets[0],
                     data: datasets[1],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',

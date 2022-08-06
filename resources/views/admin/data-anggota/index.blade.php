@@ -24,7 +24,9 @@
             <div class="card-body">
                 <x-datatable-component> 
                     @slot('columns')
+                        <th>ID Anggota</th>
                         <th>Nama</th>
+                        <th>Kelas</th>
                         <th>Email</th>
                         <th>No. HP</th>
                     @endslot
@@ -47,7 +49,9 @@
             ajax: "",
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'username', name: 'username'},
                 {data: 'name', name: 'name'},
+                {data: 'kelas', name: 'kelas'},
                 {data: 'email', name: 'email'},
                 {data: 'phone', name: 'phone'},
                 {data: 'status', name: 'status'},

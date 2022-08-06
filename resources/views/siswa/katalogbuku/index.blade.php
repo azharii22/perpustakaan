@@ -29,55 +29,43 @@
 
 			<div class="col-3">
 				<div class="list-group"> 
-					@foreach ($kategori as $item)	
-						<a href="#" class="list-group-item list-group-item-action" aria-current="true">{{ $item->name }}</a> 
+					<a href="{{ route('katalogbuku.index') }}" class="list-group-item list-group-item-action">Semua Kategori</a>
+					@foreach ($kategori as $item)
+						<a href="{{ url('/katalogbuku?kategori_id='.$item->id) }}" class="list-group-item list-group-item-action" aria-current="true">{{ $item->name }}</a> 
 					@endforeach
 				</div>
 			</div>
 			<div class="col-9">
 				<div class="card">
 					<div class="card-body">
-						
-						<div class="row">
-							<div class="col-3">
-								<div class="form-group">
-									<label class="col-form-control">Judul</label>
-									<select name="" id="" class="form-control">
-										<option value=""></option>
-									</select>
-								</div>
-							</div>
-							<div class="col-3">
-								<div class="form-group">
-									<label class="col-form-control">Kategori</label>
-									<select name="" id="" class="form-control">
-										<option value=""></option>
-									</select>
-								</div>
-							</div>
-							<div class="col-3">
-								<div class="form-group">
-									<label class="col-form-control">Tahun</label>
-									<select name="" id="" class="form-control">
-										<option value=""></option>
-									</select>
-								</div>
-							</div>
-							<div class="col-3">
-								<div class="form-group">
-									<label class="col-form-control">Pengarang</label>
-									<select name="" id="" class="form-control">
-										<option value=""></option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="row my-2">
-							<div class="col">
-								<button class="btn btn-primary">Cari</button>
-							</div>
-						</div>
 
+						<form action="{{ route('katalogbuku.index') }}" method="GET">
+							<div class="row">
+								<div class="col">
+									<div class="form-group">
+										<label class="col-form-control">Judul</label>
+										<input type="text" name="req_judul" class="form-control" value="{{request()->get('req_judul')}}">
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group">
+										<label class="col-form-control">Tahun</label>
+										<input type="text" name="req_th" class="form-control" value="{{request()->get('req_th')}}">
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group">
+										<label class="col-form-control">Pengarang</label>
+										<input type="text" name="req_pengarang" class="form-control" value="{{request()->get('req_pengarang')}}">
+									</div>
+								</div>
+							</div>
+							<div class="row my-2">
+								<div class="col">
+									<button type="submit" class="btn btn-primary">Cari</button>
+								</div>
+							</div>
+						</form>
 						<hr>
 
 						<div class="row">
@@ -86,7 +74,7 @@
 								<div class="row">
 									@foreach ($buku as $item)
 									<div class="col-3">
-										<div class="card">
+										<div class="card mb-4">
 											<div class="card-header">
 												<img src="{{ asset('assets/img/buku/'.$item->gambar) }}" alt="" class="img-fluid" style="height: 220px;">
 											</div>
@@ -117,7 +105,9 @@
 										</div>
 									</div>
 									@endforeach
-								</div>						
+								</div>
+
+								{{ $buku->links("pagination::bootstrap-4") }}
 
 							</div>
 						</div>

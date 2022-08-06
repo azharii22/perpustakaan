@@ -25,6 +25,7 @@
 				<x-datatable-component> 
 					@slot('columns')
 						<th scope="col">Cover</th>
+                        <th scope="col">Kode Buku</th>
 						<th scope="col">Judul</th>
 						<th scope="col">Kategori</th>
 						<th scope="col">Pengarang</th>
@@ -51,6 +52,7 @@
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'cover', name: 'cover'},
+                {data: 'kode_buku', name: 'kode_buku'},
 				{data: 'judul', name: 'judul'},
 				{data: 'kategori', name: 'kategori'},
                 {data: 'pengarang', name: 'pengarang'},
@@ -65,6 +67,18 @@
                     "targets": 9,
                     "className": "text-center",
                 },
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                { 
+                        extend: 'excel', 
+                        className: 'btn btn-secondary', 
+                        text: 'Download Excel',
+                        messageTop: 'Data Buku',
+                        exportOptions: {
+                            columns: [2, 3]
+                        }
+                    },
             ]
         });
 
