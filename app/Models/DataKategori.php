@@ -14,4 +14,14 @@ class DataKategori extends Model
         'name',
         'description'
     ];
+
+    public function buku()
+    {
+        return $this->hasMany(DataBuku::class, 'data_kategori_id');
+    }
+
+    public function bukuPeminjaman()
+    {
+        return $this->hasManyThrough(Peminjaman::class, DataBuku::class);
+    }
 }

@@ -3,11 +3,11 @@
 @section('content')
 <x-admin-page-component>
     @slot('currentPage')
-        Data Peminjaman
+        Perpanpanjangan
     @endslot
 
     @slot('breadcrumb')
-        <li class="breadcrumb-item active" aria-current="page">Data Peminjaman</li>
+        <li class="breadcrumb-item active" aria-current="page">Perpanjangan</li>
     @endslot
 
     @slot('actionButton')
@@ -17,7 +17,7 @@
     @slot('content')    
         <div class="card">
             <div class="card-header mb-5">
-                <span class="card-title">Data Peminjaman</span>
+                <span class="card-title">Perpanpanjangan</span>
             </div>
             <div class="card-body">
                 <x-datatable-component> 
@@ -25,7 +25,6 @@
                         <th>Kode Peminjaman</th>
                         <th>Oleh</th>
                         <th>Judul Buku</th>
-                        <th>Tanggal Akan Diambil</th>
                         <th>Tanggal Pengambilan</th>
                         <th>Jadwal Pengembalian</th>
                         <th>Tanggal Pengembalian</th>
@@ -52,7 +51,6 @@
                 {data: 'kode_peminjaman', name: 'kode_peminjaman'},
                 {data: 'user', name: 'user'},
                 {data: 'buku', name: 'buku'},
-                {data: 'tanggal_diambil', name: 'tanggal_diambil'},
                 {data: 'tanggal_pengambilan', name: 'tanggal_pengambilan'},
                 {data: 'tanggal_pengembalian', name: 'tanggal_pengembalian'},
                 {data: 'tanggal_pengembalian_aktual', name: 'tanggal_pengembalian_aktual'},
@@ -65,31 +63,14 @@
                     "targets": "_all"
                 },
                 {
-                    "targets": 9,
+                    "targets": 7,
                     "className": 'text-center'
                 },
                 {
-                    "targets": 8,
+                    "targets": 6,
                     "className": 'text-center'
                 }
             ]
         });
-
-        function destroy(e) {
-            var url = '{{ route("admin.data-rak.destroy", ":id") }}';
-            url = url.replace(':id', e);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url    : url,
-                type   : "delete",
-                success: function(data) {
-                    $('#datatables').DataTable().ajax.reload();
-                }
-            })
-        }
     </script>
 @endpush

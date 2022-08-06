@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 
 use App\Models\Peminjaman;
 
-class PengembalianController extends Controller
+class PerpanjanganController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class PengembalianController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
-            $data = Peminjaman::with('user', 'buku')->dikembalikan();
+            $data = Peminjaman::with('user', 'buku')->diperpanjang();
 
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -48,10 +48,18 @@ class PengembalianController extends Controller
                 ->addColumn('status', function ($row) {
                     return '<span class="badge bg-dark">'.$row->status.'</span>';
                 })
-                ->rawColumns(['status'])
+                ->addColumn('action', function ($row) {
+                    if($row->status === 'BERHASIL' || $row->status === 'TOLAK') {
+                        $edit = '';
+                    } else {
+                        $edit = '<a href="'.route('admin.data-peminjaman.edit', $row->id).'" class="btn btn-secondary btn-sm">PENGAMBILAN</a>'; 
+                    }
+                    return $edit;
+                })
+                ->rawColumns(['status', 'action'])
                 ->make(true);
         }
-        return view('admin.pengembalian.index');
+        return view('admin.perpanjangan.index');
     }
 
     /**
@@ -64,7 +72,7 @@ class PengembalianController extends Controller
     {
         $peminjaman = Peminjaman::with('buku', 'user')->find($id);
 
-        return view('admin.pengembalian.edit', compact('peminjaman'));
+        return view('admin.perpanjangan.edit', compact('peminjaman'));
     }
 
     /**
@@ -76,17 +84,12 @@ class PengembalianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'tanggal_pengembalian_aktual' => 'required'
-        ]);
-
         $peminjaman = Peminjaman::with('buku')->find($id);
         $peminjaman->update([
-            'tanggal_pengembalian_aktual'   => $request->tanggal_pengembalian_aktual,
-            'status'                        => 'DIKEMBALIKAN',
+            'tanggal_pengembalian'  => \Carbon\Carbon::parse($request->tanggal_pengembalian),
+            'status'                => 'DIPERPANJANG'
         ]);
-        $peminjaman->buku()->increment('jumlah', 1);
 
-        return redirect()->route('admin.data-peminjaman.index')->with('success', 'Data Pengembalian berhasil diproses');
+        return redirect()->route('admin.data-peminjaman.index')->with('success', 'Data Perpanjang Peminjaman berhasil diproses');
     }
 }

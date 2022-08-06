@@ -22,7 +22,7 @@ class CreatePeminjamansTable extends Migration
             $table->date('tanggal_pengambilan')->nullable();
             $table->date('tanggal_pengembalian')->nullable();
             $table->date('tanggal_pengembalian_aktual')->nullable();
-            $table->enum('status', ['BARU', 'BERHASIL', 'TOLAK']);
+            $table->enum('status', ['BARU', 'DIPINJAM', 'DIPERPANJANG', 'DIKEMBALIKAN'])->default('BARU');
             $table->timestamps();
         });
     }

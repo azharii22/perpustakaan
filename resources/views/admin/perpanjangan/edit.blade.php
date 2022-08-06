@@ -3,12 +3,12 @@
 @section('content')
 <x-admin-page-component>
     @slot('currentPage')
-        Proses Pengembalian
+        Proses Perpanjangan
     @endslot
 
     @slot('breadcrumb')
         <li class="breadcrumb-item"><a href="{{ route('admin.data-peminjaman.index') }}">Data Peminjaman</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Proses Pengembalian</li>
+        <li class="breadcrumb-item active" aria-current="page">Proses Perpanjangan</li>
     @endslot
 
     @slot('actionButton')
@@ -16,7 +16,7 @@
     @endslot
 
     @slot('content')
-    <form action="{{ route('admin.data-pengembalian.update', $peminjaman->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.data-perpanjangan.update', $peminjaman->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -44,12 +44,6 @@
             <label for="inputText" class="col-sm-2 col-form-label">Jadwal Pengambilan</label>
             <div class="col-sm-10">
                 <input type="date" class="form-control" name="tanggal_pengambilan" value="{{ $peminjaman->tanggal_pengembalian }}" disabled>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Tanggal Pengembalian</label>
-            <div class="col-sm-10">
-                <input type="date" class="form-control" name="tanggal_pengembalian_aktual">
             </div>
         </div>
 
@@ -93,9 +87,22 @@
                 </div>
             </div>
         </div>
+        <h5 class="mt-5">Perpanjangan</h5>
         <hr>
+        <div class="row">
+            <span class="alert alert-warning">Maksimal perpanjang peminjaman 1 Minggu</span>
+        </div>
+        <div class="row">
+            <div class="form-group row my-2">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Perpanjang</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($peminjaman->tanggal_pengembalian)->addWeeks(1)->format('d/m/Y') }}" disabled>
+                </div>
+                <input type="hidden" name="tanggal_pengembalian" value="{{ \Carbon\Carbon::parse($peminjaman->tanggal_pengembalian)->addWeeks(1) }}">
+            </div>
+        </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3 mt-5">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button class="btn btn-secondary">Cancel</button>

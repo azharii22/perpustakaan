@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 
 use App\Http\Controllers\Admin\PeminjamanController;
 use App\Http\Controllers\Admin\PengembalianController;
+use App\Http\Controllers\Admin\PerpanjanganController;
 use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\DataBukuController;
 use App\Http\Controllers\Admin\KategoriController;
@@ -41,8 +42,16 @@ Route::prefix('admin')->as('admin.')->middleware('is_admin')->group(function () 
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     //
     Route::resources([
+        'data-pengembalian'     => PengembalianController::class,
+        'data-perpanjangan'     => PerpanjanganController::class,
+    ], [
+		'only' => ['index', 'edit', 'update']
+	]);
+
+    Route::resources([
         'data-peminjaman'       => PeminjamanController::class,
         'data-pengembalian'     => PengembalianController::class,
+        'data-perpanjangan'     => PerpanjanganController::class,
         //
         'data-anggota'  => AnggotaController::class,
         //

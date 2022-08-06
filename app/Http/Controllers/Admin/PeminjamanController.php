@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 use App\Models\Peminjaman;
+use App\Models\DataBuku;
 
 class PeminjamanController extends Controller
 {
@@ -18,7 +19,7 @@ class PeminjamanController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
-            $data = Peminjaman::with('user', 'buku');
+            $data = Peminjaman::with('user', 'buku')->orderByDesc('created_at');
 
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -28,26 +29,42 @@ class PeminjamanController extends Controller
                 ->addColumn('buku', function ($row) {
                     return $row->buku->judul;
                 })
-                ->addColumn('status', function ($row) {
-                    if($row->status === 'BERHASIL') {
-                        return '<span class="badge bg-success">'.$row->status.'</span>';
-                    } elseif($row->status === 'TOLAK') {
-                        return '<span class="badge bg-danger">'.$row->status.'</span>';
-                    } else {
-                        return '<span class="badge bg-dark">'.$row->status.'</span>';
+                ->addColumn('tanggal_diambil', function ($row) {
+                    return $row->tanggal_diambil->format('d/m/Y');
+                })
+                ->addColumn('tanggal_pengambilan', function ($row) {
+                    if($row->tanggal_pengambilan) {
+                        return $row->tanggal_pengambilan->format('d/m/Y');
                     }
+                })
+                ->addColumn('tanggal_pengembalian', function ($row) {
+                    if($row->tanggal_pengembalian) {
+                        return $row->tanggal_pengembalian->format('d/m/Y');
+                    }
+                })
+                ->addColumn('tanggal_pengembalian_aktual', function ($row) {
+                    if($row->tanggal_pengembalian_aktual) {
+                        if($row->tanggal_pengembalian_aktual > $row->tanggal_pengembalian || $row->tanggal_pengembalian < \Carbon\Carbon::now()) {
+                            return $row->tanggal_pengembalian_aktual->format('d/m/Y').'<span class="badge bg-danger mx-4">TELAT</span>';    
+                        } else {
+                            return $row->tanggal_pengembalian_aktual->format('d/m/Y');
+                        }
+                    }
+                    
+                })
+                ->addColumn('status', function ($row) {
+                    return '<span class="badge bg-dark">'.$row->status.'</span>';
                 })
                 ->addColumn('action', function ($row) {
-                    if($row->status === 'BERHASIL' || $row->status === 'TOLAK') {
-                        $edit = '';
-                        $delete = '';
-                    } else {
-                        $edit = '<a href="'.route('admin.data-peminjaman.edit', $row->id).'" class="btn btn-success btn-sm">PROSES</a>'; 
-                        $delete = '<a href="javascript:void(0)" onclick="destroy('.$row->id.')" class="btn btn-danger btn-sm mx-2">TOLAK</a>';
+                    if($row->status === 'BARU') {
+                        return $edit = '<a href="'.route('admin.data-peminjaman.edit', $row->id).'" class="btn btn-warning btn-sm text-white">PROSES PEMINJAMAN</a>'; ;
+                    } elseif($row->status === 'DIPINJAM' || $row->status === 'DIPERPANJANG') {
+                        $edit       = '<a href="'.route('admin.data-pengembalian.edit', $row->id).'" class="btn btn-info btn-sm text-white">PROSES PENGEMBALIAN</a>';
+                        $perpanjang = '<a href="'.route('admin.data-perpanjangan.edit', $row->id).'" class="btn btn-primary btn-sm text-white mb-2">PROSES PERPANJANGAN</a>';
+                        return $perpanjang.$edit;
                     }
-                    return $edit.$delete;
                 })
-                ->rawColumns(['status', 'action'])
+                ->rawColumns(['tanggal_pengembalian_aktual', 'status', 'action'])
                 ->make(true);
         }
         return view('admin.peminjaman.index');
@@ -113,10 +130,14 @@ class PeminjamanController extends Controller
 
         $peminjaman = Peminjaman::find($id);
         $peminjaman->update([
-            'status'                => 'BERHASIL',
+            'status'                => 'DIPINJAM',
             'tanggal_pengambilan'   => \Carbon\Carbon::now(),
             'tanggal_pengembalian'  => \Carbon\Carbon::now()->addDays(7),
         ]);
+
+        
+        $buku = DataBuku::find($peminjaman->data_buku_id);
+        $buku->decrement('jumlah', 1);
 
         return redirect()->route('admin.data-peminjaman.index')->with('success', 'Data Peminjaman berhasil diproses');
     }

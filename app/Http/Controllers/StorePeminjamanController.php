@@ -24,8 +24,7 @@ class StorePeminjamanController extends Controller
             'user_id'           => auth()->user()->id,
             'data_buku_id'      => $request->data_buku_id,
             'tanggal_diambil'   => $request->tanggal_diambil,
-            'status'            => 'BARU'
-        ]);      
+        ]);
 
         return redirect()->route('profile');
     }

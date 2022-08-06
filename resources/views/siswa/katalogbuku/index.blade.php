@@ -88,7 +88,7 @@
 									<div class="col-3">
 										<div class="card">
 											<div class="card-header">
-												<img src="{{ asset('assets/img/'.$item->gambar) }}" alt="" class="img-fluid" style="height: 220px;">
+												<img src="{{ asset('assets/img/buku/'.$item->gambar) }}" alt="" class="img-fluid" style="height: 220px;">
 											</div>
 											<div class="card-body">
 												<div class="row">

@@ -33,7 +33,7 @@
                         
                         <div class="row">
                             <div class="col-3">
-                                <img src="{{ asset('assets/img/'.$buku->gambar) }}" alt="" class="img-fluid" style="height: 280px;">
+                                <img src="{{ asset('assets/img/buku/'.$buku->gambar) }}" alt="" class="img-fluid" style="height: 280px;">
                             </div>
                             <div class="col-9">
                                 <h1 class="mb-4">{{ $buku->judul }}</h1>

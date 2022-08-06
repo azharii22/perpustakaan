@@ -15,7 +15,7 @@
 			<ul id="charts-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
 				<li> <a href="{{ route('admin.data-peminjaman.index') }}"> <i class="bi bi-circle"></i><span>Peminjaman</span> </a></li>
 				<li> <a href="{{ route('admin.data-pengembalian.index') }}"> <i class="bi bi-circle"></i><span>Pengembalian</span> </a></li>
-				<li> <a href="charts-echarts.html"> <i class="bi bi-circle"></i><span>Perpanjangan</span> </a></li>
+				<li> <a href="{{ route('admin.data-perpanjangan.index') }}"> <i class="bi bi-circle"></i><span>Perpanjangan</span> </a></li>
 			</ul>
 		</li><!-- End Tables Nav -->
 

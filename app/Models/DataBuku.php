@@ -45,4 +45,9 @@ class DataBuku extends Model
     {
         return $this->belongsTo(DataRak::class, 'data_rak_id')->withTrashed();
     }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class, 'data_buku_id');
+    }
 }

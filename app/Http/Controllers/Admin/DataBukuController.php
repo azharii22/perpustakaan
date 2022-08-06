@@ -23,7 +23,7 @@ class DataBukuController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('cover', function ($row) {
-                    return '<img src="'.asset('assets/img/'.$row->gambar).'" style="height: 200px; width: 150px;">';
+                    return '<img src="'.asset('assets/img/buku/'.$row->gambar).'" style="height: 200px; width: 150px;">';
                 })
                 ->addColumn('kategori', function ($row) {
                     return '<span class="badge bg-dark">'.$row->kategori->name.'</span>';
@@ -74,7 +74,7 @@ class DataBukuController extends Controller
             ]);
             $image              = $request->file('gambar');
             $imageName          = $request->judul.'_'.time().'.'.$image->getClientOriginalExtension();
-            $destinationPath    = public_path('/assets/img');
+            $destinationPath    = public_path('/assets/img/buku');
             $image->move($destinationPath, $imageName);
             DataBuku::create(array_merge($request->validated(), ['gambar' => $imageName]));
         } else {
@@ -103,7 +103,7 @@ class DataBukuController extends Controller
             ]);
             $image              = $request->file('gambar');
             $imageName          = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath    = public_path('/assets/img');
+            $destinationPath    = public_path('/assets/img/buku');
             $image->move($destinationPath, $imageName);
 
             $buku->update(array_merge($request->validated(), ['gambar' => $imageName]));

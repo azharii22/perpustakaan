@@ -16,6 +16,12 @@ class Peminjaman extends Model
         'tanggal_pengembalian_aktual',
         'status',
     ];
+    protected $dates = [
+        'tanggal_diambil',
+        'tanggal_pengambilan',
+        'tanggal_pengembalian',
+        'tanggal_pengembalian_aktual',
+    ];
 
     public static function boot()
     {
@@ -29,6 +35,36 @@ class Peminjaman extends Model
 
             $model->kode_peminjaman = 'PJM/'.$date.'/'.$user_id.'/000'.str_pad($lastID+1, 3);
         });
+    }
+
+    public function scopeAvailable($query)
+    {
+        $query->where('jumlah', '>=', 0);
+    }
+
+    public function scopeBaru($query)
+    {
+        $query->where('status', 'BARU');
+    }
+
+    public function scopeDipinjam($query)
+    {
+        $query->orwhere('status', 'DIPINJAM');
+    }
+
+    public function scopeDiperpanjang($query)
+    {
+        $query->orwhere('status', 'DIPERPANJANG');
+    }
+
+    public function scopeDikembalikan($query)
+    {
+        $query->where('status', 'DIKEMBALIKAN');
+    }
+
+    public function scopeTerlambat($query)
+    {
+        $query->where('tanggal_pengembalian', '<', \Carbon\Carbon::now());
     }
 
     public function user()

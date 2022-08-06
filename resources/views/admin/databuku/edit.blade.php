@@ -21,7 +21,7 @@
 		@method('PUT')
 			<div class="row mb-2">
 				<div class="col">
-					<img src="{{ asset('assets/img/'.$buku->gambar) }}" alt="gambar" style="height: 200px; width: 150px;">
+					<img src="{{ asset('assets/img/buku/'.$buku->gambar) }}" alt="gambar" style="height: 200px; width: 150px;">
 				</div>
 			</div>
 			<div class="row mb-3">
