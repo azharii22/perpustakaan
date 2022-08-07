@@ -34,7 +34,7 @@ class DataBuku extends Model
             $count  = static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
             $kategoriCount = static::where('data_kategori_id', $model->data_kategori_id)->count();
             //
-            $model->kode_buku   = substr($model->kategori->name, 0, 1).str_pad($kategoriCount+1, 3, '0', STR_PAD_LEFT).strtoupper(Str::random(3));
+            // $model->kode_buku   = substr($model->kategori->name, 0, 1).str_pad($kategoriCount+1, 3, '0', STR_PAD_LEFT).strtoupper(Str::random(3));
             $model->slug        = $count ? "{$slug}-{$count}" : $slug;
         });
     }

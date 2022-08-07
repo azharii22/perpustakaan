@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BukuRequest extends FormRequest
+class BukuUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class BukuRequest extends FormRequest
         return [
             'data_kategori_id'  => 'required',
             'data_rak_id'       => 'required',
-            'kode_buku'         => 'required|unique:data_bukus,kode_buku',
+            'kode_buku'         => 'required|unique:data_bukus,kode_buku,'.$this->kode_buku.',kode_buku',
             'judul'             => 'required',
             'jumlah'            => 'required|numeric|min:0',
             'pengarang'         => 'nullable',

@@ -25,6 +25,12 @@
 				</div>
 			</div>
 			<div class="row mb-3">
+				<label for="inputText" class="col-sm-2 col-form-label">Kode Buku</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="kode_buku" value="{{ $buku->kode_buku }}">
+				</div>
+			</div>
+			<div class="row mb-3">
 				<label for="inputText" class="col-sm-2 col-form-label">Judul</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="judul" value={{ $buku->judul }}>

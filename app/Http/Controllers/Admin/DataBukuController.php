@@ -12,6 +12,7 @@ use App\Models\DataBuku;
 use App\Models\DataKategori;
 use App\Models\DataRak;
 use App\Http\Requests\Admin\BukuRequest;
+use App\Http\Requests\Admin\BukuUpdateRequest;
 
 class DataBukuController extends Controller
 {
@@ -93,7 +94,7 @@ class DataBukuController extends Controller
         return view('admin.databuku.edit', compact('buku', 'kategori', 'rak'));
     }
 
-    public function update(BukuRequest $request, $id)
+    public function update(BukuUpdateRequest $request, $id)
     {
         $buku = DataBuku::withTrashed()->find($id);
 
