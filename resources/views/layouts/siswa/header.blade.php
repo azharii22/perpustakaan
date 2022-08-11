@@ -13,6 +13,7 @@
 				<li><a href="/" class="active">Home</a></li>
 				<li><a href="/tentang">About</a></li>
 				<li><a href="/katalogbuku">Katalog Buku</a></li>
+				@auth
 				<li class="dropdown"><a href="#"><span>Sirkulasi</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
 						<li><a href="{{ route('peminjaman-buku') }}">Peminjaman Buku</a></li>
@@ -20,6 +21,7 @@
 					</ul>
 				</li>
 				<li><a href="/profile">Profile</a></li>
+				@endauth
 				@auth
 				<li>
 					<a class="dropdown-item" href="{{ route('logout') }}"
