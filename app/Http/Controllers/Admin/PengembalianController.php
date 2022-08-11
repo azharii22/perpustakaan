@@ -51,7 +51,7 @@ class PengembalianController extends Controller
                 ->addColumn('status', function ($row) {
                     return '<span class="badge bg-dark">'.$row->status.'</span>';
                 })
-                ->rawColumns(['status'])
+                ->rawColumns(['status', 'tanggal_pengembalian_aktual'])
                 ->make(true);
         }
         return view('admin.pengembalian.index');

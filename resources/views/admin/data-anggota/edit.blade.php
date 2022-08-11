@@ -20,10 +20,22 @@
         @csrf
         @method('PUT')
 
+        <div class="row mb-2">
+            <div class="col">
+                <img src="{{ asset('assets/img/profile/'.$data_anggota->foto) }}" alt="gambar" style="height: 200px; width: 150px;">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="inputNumber" class="col-sm-2 col-form-label">Foto</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="file" id="formFile" name="foto" accept=".jpg, .png, .jpeg">
+            </div>
+        </div>
         <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">ID Anggota</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="username">
+                <input type="text" class="form-control" name="username" value="{{ $data_anggota->username }}">
             </div>
         </div>
         <div class="row mb-3">
@@ -35,13 +47,13 @@
         <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Kelas</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="kelas">
+                <input type="text" class="form-control" name="kelas" value="{{ $data_anggota->kelas }}">
             </div>
         </div>
         <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Tanggal Lahir</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" name="tanggal_lahir">
+                <input type="date" class="form-control" name="tanggal_lahir" value="{{ $data_anggota->tanggal_lahir }}">
             </div>
         </div>
         <div class="row mb-3">

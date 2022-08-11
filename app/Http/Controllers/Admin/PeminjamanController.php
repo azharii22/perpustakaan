@@ -23,6 +23,11 @@ class PeminjamanController extends Controller
 
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->filter(function ($instance) use ($request) {
+                    if($request->status) {
+                        $instance->where('status', $request->status);
+                    }
+                })
                 ->addColumn('user', function ($row) {
                     return $row->user->name;
                 })

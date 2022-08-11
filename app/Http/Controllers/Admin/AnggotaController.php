@@ -64,7 +64,18 @@ class AnggotaController extends Controller
      */
     public function store(AnggotaStoreRequest $request)
     {
-        User::create(array_merge($request->validated(), ['password' => bcrypt($request->password)]));
+        if($request->hasFile('foto')){
+            $request->validate([
+                'foto'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+            $image              = $request->file('foto');
+            $imageName          = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath    = public_path('/assets/img/profile');
+            $image->move($destinationPath, $imageName);
+            User::create(array_merge($request->validated(), ['foto' => $imageName]));
+        } else {
+            User::create(array_merge($request->validated(), ['password' => bcrypt($request->password)]));
+        }
 
         return redirect()->route('admin.data-anggota.index')->with('success', 'Data Anggota berhasil ditambahkan');
     }
@@ -103,7 +114,19 @@ class AnggotaController extends Controller
     public function update(AnggotaUpdateRequest $request, $id)
     {
         $data_anggota = User::withTrashed()->find($id);
-        $data_anggota->update(array_merge($request->validated(), ['password' => bcrypt($request->password)]));
+
+        if($request->hasFile('foto')){
+            $request->validate([
+                'foto'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+            $image              = $request->file('foto');
+            $imageName          = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath    = public_path('/assets/img/profile');
+            $image->move($destinationPath, $imageName);
+            $data_anggota->update(array_merge($request->validated(), ['foto' => $imageName, 'password' => bcrypt($request->password)]));
+        } else {
+            $data_anggota->update(array_merge($request->validated(), ['password' => bcrypt($request->password)]));
+        }
 
         return redirect()->route('admin.data-anggota.index')->with('success', 'Data Anggota berhasil diperbaharui');
     }

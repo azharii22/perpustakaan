@@ -26,6 +26,6 @@ class StorePeminjamanController extends Controller
             'tanggal_diambil'   => $request->tanggal_diambil,
         ]);
 
-        return redirect()->route('profile');
+        return redirect()->route('peminjaman-buku');
     }
 }

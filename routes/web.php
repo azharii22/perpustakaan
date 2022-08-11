@@ -34,9 +34,7 @@ use App\Http\Controllers\StorePeminjamanController;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('siswa.beranda.index');
-})->name('welcome');
+Route::get('/', [PagesController::class, 'beranda'])->name('beranda');
 Route::get('/beranda', [PagesController::class, 'beranda'])->name('beranda');
 Route::get('/tentang', [PagesController::class, 'tentang'])->name('tentang');
 Route::get('/profile', [PagesController::class, 'profile'])->name('profile');

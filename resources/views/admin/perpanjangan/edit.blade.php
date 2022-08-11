@@ -37,13 +37,13 @@
         <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Tanggal Pengambilan</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" name="tanggal_pengambilan" value="{{ $peminjaman->tanggal_pengambilan }}" disabled>
+                <input type="text" class="form-control" name="tanggal_pengambilan" value="{{ $peminjaman->tanggal_pengambilan->format('d/m/Y') }}" disabled>
             </div>
         </div>
         <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Jadwal Pengambilan</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" name="tanggal_pengambilan" value="{{ $peminjaman->tanggal_pengembalian }}" disabled>
+                <input type="text" class="form-control" name="tanggal_pengambilan" value="{{ $peminjaman->tanggal_pengembalian->format('d/m/Y') }}" disabled>
             </div>
         </div>
 

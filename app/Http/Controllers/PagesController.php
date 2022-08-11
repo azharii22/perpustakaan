@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Models\DataKategori;
 use App\Models\DataBuku;
+use App\Models\User;
 
 class PagesController extends Controller
 {
     public function beranda()
     {
-        return view('siswa.beranda.index');
+        $totalUser = User::user()->count();
+        $totalKategori = DataKategori::count();
+        $totalBuku = DataBuku::sum('jumlah');
+
+        return view('siswa.beranda.index', compact('totalUser', 'totalKategori', 'totalBuku'));
     }
 
     public function tentang()

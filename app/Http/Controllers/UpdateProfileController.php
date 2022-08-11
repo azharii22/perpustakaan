@@ -17,7 +17,20 @@ class UpdateProfileController extends Controller
     public function __invoke(ProfileUpdateRequest $request)
     {
         $user = auth()->user();
-        $user->update($request->validated());
+
+        if($request->hasFile('foto')){
+            $request->validate([
+                'foto'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+            $image              = $request->file('foto');
+            $imageName          = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath    = public_path('/assets/img/profile');
+            $image->move($destinationPath, $imageName);
+
+            $user->update(array_merge($request->validated(), ['foto' => $imageName]));
+        } else {
+            $user->update($request->validated());
+        }
 
         if($user->is_admin != 0) {
             return redirect()->route('admin.profile')->with('success', 'Profile berhasil diperbaharui');

@@ -71,14 +71,14 @@
             dom: 'Bfrtip',
             buttons: [
                 { 
-                        extend: 'excel', 
-                        className: 'btn btn-secondary', 
-                        text: 'Download Excel',
-                        messageTop: 'Data Buku',
-                        exportOptions: {
-                            columns: [2, 3]
-                        }
-                    },
+                    extend: 'excel', 
+                    className: 'btn btn-secondary', 
+                    text: 'Download Excel',
+                    messageTop: 'Data Buku',
+                    exportOptions: {
+                        columns: [2, 3]
+                    }
+                },
             ]
         });
 

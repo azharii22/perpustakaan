@@ -44,7 +44,19 @@
 					@endif
 					<form action="{{ route('profile-update') }}" method="POST" enctype="multipart/form-data">
 						@csrf
-				
+
+						<div class="row mb-2">
+							<div class="col">
+								<img src="{{ asset('assets/img/profile/'.auth()->user()->foto) }}" alt="foto" style="height: 200px; width: 150px;">
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label for="inputNumber" class="col-sm-2 col-form-label">Foto</label>
+							<div class="col-sm-10">
+								<input class="form-control" type="file" id="formFile" name="foto" accept=".jpg, .png, .jpeg">
+							</div>
+						</div>
 						<div class="row mb-3">
 							<label for="inputText" class="col-sm-2 col-form-label">ID Anggota</label>
 							<div class="col-sm-10">

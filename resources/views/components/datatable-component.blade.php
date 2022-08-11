@@ -1,6 +1,6 @@
 
 <div>    
-    <table class="table" id="datatables">
+    <table class="table table-responsive responsive" id="datatables">
         <thead>
             <tr>
                 <th scope="col" style="width: 5%;">No</th>

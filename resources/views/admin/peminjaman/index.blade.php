@@ -11,15 +11,31 @@
     @endslot
 
     @slot('actionButton')
-        
     @endslot
-
-    @slot('content')    
+    
+    @slot('content')   
         <div class="card">
             <div class="card-header mb-5">
                 <span class="card-title">Data Peminjaman</span>
             </div>
             <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="">Tampilkan</label>
+                            <select name="status" id="status" class="form-control">
+                                <option selected value="">--Semua Status--</option>
+                                <option value="BARU">BARU</option>
+                                <option value="DIPINJAM">DIPINJAM</option>
+                                <option value="DIKEMBALIKAN">DIKEMBALIKAN</option>
+                                <option value="DIPERPANJANG">DIPERPANJANG</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{-- <div class="col-3">
+                        <a href="#" class="btn btn-success"></a>
+                    </div> --}}
+                </div>
                 <x-datatable-component> 
                     @slot('columns')
                         <th>Kode Peminjaman</th>
@@ -47,7 +63,13 @@
         var datatable = $('#datatables').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "",
+            ajax: {
+                url: "{{ route('admin.data-peminjaman.index') }}",
+                data: function (d) {
+                    d.status = $('#status').val();
+                    console.log(d.status);
+                }
+            },
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'kode_peminjaman', name: 'kode_peminjaman'},
@@ -61,7 +83,7 @@
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, seacrhable: false}
             ],
-            "columnDefs": [
+            columnDefs: [
                 {
                     "defaultContent": "-",
                     "targets": "_all"
@@ -74,24 +96,22 @@
                     "targets": 9,
                     "className": 'text-center'
                 }
+            ],
+            dom: 'lBfrtip',
+            buttons: [
+                { 
+                    extend: 'excel', 
+                    className: 'btn btn-secondary mt-4', 
+                    text: 'Download Excel',
+                    messageTop: 'Data Peminjaman',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    }
+                },
             ]
         });
-
-        function destroy(e) {
-            var url = '{{ route("admin.data-rak.destroy", ":id") }}';
-            url = url.replace(':id', e);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url    : url,
-                type   : "delete",
-                success: function(data) {
-                    $('#datatables').DataTable().ajax.reload();
-                }
-            })
-        }
+        $('#status').change(function(){
+            datatable.draw();
+        });
     </script>
 @endpush

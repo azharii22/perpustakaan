@@ -8,12 +8,6 @@
             <span>Perpustakaan</span>
           </a>
           <p>Perpustakaan merupakan upaya untuk memelihara dan meningkattkan efisiensi dan efektifitas proses belajar-mengajar. Perpustakaan yang terorganisir secara baik dan sisitematis, secara langsung atau pun tidak langsung dapat memberikan kemudahan bagi proses belajar mengajar di sekolah tempat perpustakaan tersebut berada.</p>
-          <div class="social-links d-flex mt-4">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
         </div>
 
       </div>
