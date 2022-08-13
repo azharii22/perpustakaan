@@ -19,15 +19,31 @@ class DataBukuController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
-            $data = DataBuku::withTrashed()->with('kategori');
+            $data = DataBuku::withTrashed()->with('kategori', 'rak');
             
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->filter(function ($instance) use ($request) {
+                    if($request->kategori_id) {
+                        if($request->rak_id) {
+                            return $instance->where('data_kategori_id', $request->kategori_id)->where('data_rak_id', $request->rak_id);
+                        }
+                        return $instance->where('data_kategori_id', $request->kategori_id);
+                    } elseif($request->rak_id) {
+                        if($request->kategori_id) {
+                            return $instance->where('data_rak_id', $request->rak_id)->where('data_kategori_id', $request->kategori_id);
+                        }
+                        return $instance->where('data_rak_id', $request->rak_id);
+                    }
+                })
                 ->addColumn('cover', function ($row) {
                     return '<img src="'.asset('assets/img/buku/'.$row->gambar).'" style="height: 200px; width: 150px;">';
                 })
                 ->addColumn('kategori', function ($row) {
                     return '<span class="badge bg-dark">'.$row->kategori->name.'</span>';
+                })
+                ->addColumn('rak', function ($row) {
+                    return '<span class="badge bg-dark">Rak '.$row->rak->name.'</span>';
                 })
                 ->addColumn('jumlah', function ($row) {
                     if($row->jumlah <= 0) {
@@ -52,7 +68,7 @@ class DataBukuController extends Controller
                     }
                     return $edit.$delete;
                 })
-                ->rawColumns(['cover', 'kategori', 'jumlah', 'status', 'action'])
+                ->rawColumns(['cover', 'kategori', 'jumlah', 'status', 'action', 'rak'])
                 ->make();
         }
 

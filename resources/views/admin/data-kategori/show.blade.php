@@ -2,26 +2,65 @@
 
 @section('content')
 <x-admin-page-component>
-	@slot('currentPage')
-		Data Buku
-	@endslot
-
-	@slot('breadcrumb')
-        <li class="breadcrumb-item active" aria-current="page">Data Buku</li>
+    @slot('currentPage')
+        Detail Data Kategori
     @endslot
 
-	@slot('actionButton')
-		<a href="{{ route('admin.data-buku.create') }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip">
-			<i class="bi bi-plus mr-2"></i> Tambah Data Buku
-		</a>
-	@endslot
+    @slot('breadcrumb')
+        <li class="breadcrumb-item"><a href="{{ route('admin.data-kategori.index') }}">Data Kategori</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Daftar Buku Kategori {{ $kategori->name }}</li>
+    @endslot
 
-	@slot('content')    
-		<div class="card">
+    @slot('actionButton')
+        <h5 class="card-title">Detail Kategori</h5>
+    @endslot
+
+    @slot('content')
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Nama Kategori</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="name" value="{{ $kategori->name }}" disabled>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Deskripsi</label>
+            <div class="col-sm-10">
+                <textarea name="description" class="form-control" disabled>{{ $kategori->description }}</textarea>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Total Buku</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="name" value="{{ $kategori->buku->count() }}" disabled>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Total Lokasi Rak</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="name" value="{{ $rak->count() }}" disabled>
+            </div>
+        </div>
+
+        <hr>
+        <h5 class="card-title">Daftar Buku</h5>
+
+        <div class="card">
 			<div class="card-header mb-5">
-				<span class="card-title">Data Rak</span>
 			</div>
 			<div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label class="control-label">Tampilkan</label>
+                            <select name="rak_id" id="rak_id" class="form-control">
+                                <option selected value="">--Semua Rak--</option>
+                                @foreach ($rak as $item)
+                                    <option value="{{ $item->id }}">Rak. {{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
 				<x-datatable-component> 
 					@slot('columns')
 						<th scope="col">Cover</th>
@@ -37,7 +76,7 @@
 				</x-datatable-component>
 			</div>
 		</div>
-	@endslot
+    @endslot
 </x-admin-page-component>
 @endsection
 @push('css')
@@ -49,7 +88,13 @@
         var datatable = $('#datatables').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "",
+            ajax: {
+                url: "{{ route('admin.data-buku.index') }}",
+                data: function (d) {
+                    d.kategori_id   = @json($kategori->id);
+                    d.rak_id        = $('#rak_id').val();
+                }
+            },
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'cover', name: 'cover'},
@@ -82,6 +127,10 @@
                     }
                 },
             ]
+        });
+
+        $('#rak_id').on('change', function () {
+            datatable.draw();
         });
 
         function destroy(e) {

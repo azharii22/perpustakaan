@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 
 use App\Models\DataKategori;
 use App\Http\Requests\Admin\KategoriRequest;
+use App\Models\DataRak;
 
 class KategoriController extends Controller
 {
@@ -31,13 +32,14 @@ class KategoriController extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    $edit = '<a href="'.route('admin.data-kategori.edit', $row->id).'" class="btn btn-secondary btn-sm">EDIT</a>'; 
+                    $list = '<a href="'.route('admin.data-kategori.show', $row->id).'" class="btn btn-info btn-sm btn-block col-12 mb-2 text-white">Detail</a><br>';
+                    $edit = '<a href="'.route('admin.data-kategori.edit', $row->id).'" class="btn btn-secondary btn-sm">EDIT</a>';
                     if($row->trashed()) {
                         $delete = '<a href="javascript:void(0)" onclick="destroy('.$row->id.')" class="btn btn-success btn-sm mx-2">Aktifkan</a>';
                     } else {
                         $delete = '<a href="javascript:void(0)" onclick="destroy('.$row->id.')" class="btn btn-danger btn-sm mx-2">Non-Aktifkan</a>';
                     }
-                    return $edit.$delete;
+                    return $list.$edit.$delete;
                 })
                 ->rawColumns(['status', 'action'])
                 ->make();
@@ -76,7 +78,12 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        //
+        $kategori = DataKategori::with('buku')->withTrashed()->find($id);
+        $rak = DataRak::whereHas('buku', function ($q) use ($id) {
+            $q->where('data_kategori_id', $id);
+        })->get();
+
+        return view('admin.data-kategori.show', compact('kategori', 'rak'));
     }
 
     /**

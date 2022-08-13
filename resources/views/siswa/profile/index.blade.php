@@ -25,11 +25,48 @@
 
 <div class="container">
 	<div class="row my-4">
-		<div class="col">
+		<div class="col-4">
+			
+			<div class="card">
+				<div class="card-header">
+					Profile
+				</div>
+				<div class="card-body">
+
+					<div class="text-center">
+						<div class="row mb-2">
+							<div class="col">
+								<img src="{{ asset('assets/img/profile/'.auth()->user()->foto) }}" alt="foto" style="height: 200px; width: 150px;">
+							</div>
+						</div>
+						<p>{{ auth()->user()->username }}</p>
+						<h4>{{ auth()->user()->name }}</h4>
+						<p>{{ auth()->user()->kelas }}</p>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-4">
+							<p>Tanggal Lahir</p>
+							<p>No. HP</p>
+							<p>Alamat</p>
+							<p>Email</p>
+						</div>
+						<div class="col">
+							<p>: {{ auth()->user()->tanggal_lahir }}</p>
+							<p>: {{ auth()->user()->phone }}</p>
+							<p>: {{ auth()->user()->address }}</p>
+							<p>: {{ auth()->user()->email }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-8">
 
 			<div class="card">
 				<div class="card-header">
-					Profile Saya
+					Edit Profile
 				</div>
 				<div class="card-body">
 
@@ -44,12 +81,6 @@
 					@endif
 					<form action="{{ route('profile-update') }}" method="POST" enctype="multipart/form-data">
 						@csrf
-
-						<div class="row mb-2">
-							<div class="col">
-								<img src="{{ asset('assets/img/profile/'.auth()->user()->foto) }}" alt="foto" style="height: 200px; width: 150px;">
-							</div>
-						</div>
 
 						<div class="row mb-3">
 							<label for="inputNumber" class="col-sm-2 col-form-label">Foto</label>
@@ -113,8 +144,9 @@
 			
 		</div>
 	</div>
+	<hr>
 	<div class="row my-4">
-		<div class="col">
+		<div class="col-12">
 
 			<div class="card">
 				<div class="card-header">

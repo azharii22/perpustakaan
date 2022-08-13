@@ -14,4 +14,9 @@ class DataRak extends Model
         'name',
         'description'
     ];
+
+    public function buku()
+    {
+        return $this->hasMany(DataBuku::class, 'data_rak_id');
+    }
 }

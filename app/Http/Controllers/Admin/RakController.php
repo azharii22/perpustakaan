@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 
 use App\Models\DataRak;
 use App\Http\Requests\Admin\KategoriRequest;
+use App\Models\DataKategori;
 
 class RakController extends Controller
 {
@@ -31,13 +32,14 @@ class RakController extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
+                    $list = '<a href="'.route('admin.data-rak.show', $row->id).'" class="btn btn-info btn-sm btn-block col-12 mb-2 text-white">Detail</a><br>';
                     $edit = '<a href="'.route('admin.data-rak.edit', $row->id).'" class="btn btn-secondary btn-sm">EDIT</a>'; 
                     if($row->trashed()) {
                         $delete = '<a href="javascript:void(0)" onclick="destroy('.$row->id.')" class="btn btn-success btn-sm mx-2">Aktifkan</a>';
                     } else {
                         $delete = '<a href="javascript:void(0)" onclick="destroy('.$row->id.')" class="btn btn-danger btn-sm mx-2">Non-Aktifkan</a>';
                     }
-                    return $edit.$delete;
+                    return $list.$edit.$delete;
                 })
                 ->make();
         }
@@ -75,7 +77,12 @@ class RakController extends Controller
      */
     public function show($id)
     {
-        //
+        $rak = DataRak::withTrashed()->with('buku')->find($id);
+        $kategori = DataKategori::whereHas('buku', function ($q) use ($id) {
+            $q->where('data_rak_id', $id);
+        })->get();
+
+        return view('admin.data-rak.show', compact('rak', 'kategori'));
     }
 
     /**

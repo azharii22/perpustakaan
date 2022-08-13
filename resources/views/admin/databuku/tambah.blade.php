@@ -53,7 +53,7 @@
 					<select name="data_rak_id" class="form-select">
 						<option selected disabled hidden>--Pilih Rak--</option>
 						@foreach ($rak as $item)	
-						<option value="{{ $item->id }}">{{ $item->name }}</option>
+						<option value="{{ $item->id }}">Rak. {{ $item->name }}</option>
 						@endforeach
 					</select>
 				</div>
