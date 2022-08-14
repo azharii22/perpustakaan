@@ -24,16 +24,24 @@ class DataBukuController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {
-                    if($request->kategori_id) {
+                    if($request->has('kategori_id') && !is_null($request->get('kategori_id'))) {
                         if($request->rak_id) {
-                            return $instance->where('data_kategori_id', $request->kategori_id)->where('data_rak_id', $request->rak_id);
+                             $instance->where('data_kategori_id', $request->kategori_id)->where('data_rak_id', $request->rak_id);
                         }
-                        return $instance->where('data_kategori_id', $request->kategori_id);
-                    } elseif($request->rak_id) {
+                         $instance->where('data_kategori_id', $request->kategori_id);
+                    } 
+                    if($request->has('rak_id') && !is_null($request->get('rak_id'))) {
                         if($request->kategori_id) {
-                            return $instance->where('data_rak_id', $request->rak_id)->where('data_kategori_id', $request->kategori_id);
+                             $instance->where('data_rak_id', $request->rak_id)->where('data_kategori_id', $request->kategori_id);
                         }
-                        return $instance->where('data_rak_id', $request->rak_id);
+                         $instance->where('data_rak_id', $request->rak_id);
+                    } 
+                    if($request->has('search') && !is_null($request->get('search')['value'])) {                        
+                        $instance->where('judul', 'LIKE', '%'.$request->get('search')['value'].'%')
+                            ->orwhere('kode_buku', 'LIKE', '%'.$request->get('search')['value'].'%')
+                            ->orwhere('pengarang', 'LIKE', '%'.$request->get('search')['value'].'%')
+                            ->orwhere('penerbit', 'LIKE', '%'.$request->get('search')['value'].'%')
+                            ->orwhere('th_terbit', 'LIKE', '%'.$request->get('search')['value'].'%');
                     }
                 })
                 ->addColumn('cover', function ($row) {

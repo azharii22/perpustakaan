@@ -49,18 +49,18 @@
         var datatable = $('#datatables').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "",
+            ajax:"",
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'cover', name: 'cover'},
                 {data: 'kode_buku', name: 'kode_buku'},
 				{data: 'judul', name: 'judul'},
-				{data: 'kategori', name: 'kategori'},
+				{data: 'kategori', name: 'kategori.name'},
                 {data: 'pengarang', name: 'pengarang'},
 				{data: 'penerbit', name: 'penerbit'},
 				{data: 'th_terbit', name: 'th_terbit'},
                 {data: 'jumlah', name: 'jumlah'},
-                {data: 'rak', name: 'rak'},
+                {data: 'rak', name: 'rak.name'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, seacrhable: false}
             ],

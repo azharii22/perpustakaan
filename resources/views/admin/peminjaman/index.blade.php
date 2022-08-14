@@ -67,7 +67,6 @@
                 url: "{{ route('admin.data-peminjaman.index') }}",
                 data: function (d) {
                     d.status = $('#status').val();
-                    console.log(d.status);
                 }
             },
             columns: [

@@ -57,7 +57,7 @@
                 {data: 'tanggal_pengembalian', name: 'tanggal_pengembalian'},
                 {data: 'tanggal_pengembalian_aktual', name: 'tanggal_pengembalian_aktual'},
                 {data: 'status', name: 'status'},
-                {data: 'action', name: 'action', orderable: false, seacrhable: false, visible: false}
+                {data: 'action', name: 'action', orderable: false, searchable: false, visible: false}
             ],
             "columnDefs": [
                 {

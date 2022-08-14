@@ -21,15 +21,23 @@ class PeminjamanController extends Controller
         if($request->ajax()) {
             $data = Peminjaman::with('user', 'buku')->orderByDesc('created_at');
 
+            if($request->has('search') && !is_null($request->get('search')['value'])) {                        
+                $data->where('kode_peminjaman', 'LIKE', '%'.$request->get('search')['value'].'%');
+                    //->orwhere('buku.kode_buku', 'LIKE', '%'.$request->get('search')['value'].'%');
+                    // ->orwhere('pengarang', 'LIKE', '%'.$request->get('search')['value'].'%')
+                    // ->orwhere('penerbit', 'LIKE', '%'.$request->get('search')['value'].'%')
+                    // ->orwhere('th_terbit', 'LIKE', '%'.$request->get('search')['value'].'%');
+            }
+
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('user', function ($row) {
+                    return $row->user->name;
+                })
                 ->filter(function ($instance) use ($request) {
                     if($request->status) {
                         $instance->where('status', $request->status);
                     }
-                })
-                ->addColumn('user', function ($row) {
-                    return $row->user->name;
                 })
                 ->addColumn('buku', function ($row) {
                     return $row->buku->judul;
