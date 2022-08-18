@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\DataBukuController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\RakController;
+use App\Http\Controllers\Admin\ResetPasswordController as ResetPasswordByAdminController;
+use App\Http\Controllers\Admin\ImportDataAnggotaController;
+use App\Http\Controllers\Admin\UpdateKelasController;
 
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SirkulasiController;
@@ -19,7 +22,7 @@ use App\Http\Controllers\UpdateProfileController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\CreatePeminjamanController;
 use App\Http\Controllers\StorePeminjamanController;
-
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,17 +40,20 @@ Auth::routes();
 Route::get('/', [PagesController::class, 'beranda'])->name('beranda');
 Route::get('/beranda', [PagesController::class, 'beranda'])->name('beranda');
 Route::get('/tentang', [PagesController::class, 'tentang'])->name('tentang');
-Route::get('/profile', [PagesController::class, 'profile'])->name('profile');
-Route::post('/profile/update', UpdateProfileController::class)->name('profile-update');
-Route::post('/profile/password/update', UpdatePasswordController::class)->name('password-update');
 Route::get('/katalogbuku', [PagesController::class, 'katalog'])->name('katalogbuku.index');
 Route::get('/katalogbuku/{id}', [PagesController::class, 'katalogShow'])->name('katalogbuku.show');
+Route::get('/reset-password', [PagesController::class, 'resetPassword'])->name('reset-password');
+Route::post('/reset-password/post', ResetPasswordController::class)->name('reset-password-post');
 
 Route::middleware('auth')->group(function () {
     Route::get('/buat-peminjaman/{id}', CreatePeminjamanController::class)->name('create-peminjaman');
     Route::post('/buat-peminjaman', StorePeminjamanController::class)->name('store-peminjaman');
     Route::get('/peminjaman-buku', [SirkulasiController::class, 'peminjaman'])->name('peminjaman-buku');
     Route::get('/pengembalian-buku', [SirkulasiController::class, 'pengembalian'])->name('pengembalian-buku');
+    Route::get('/profile', [PagesController::class, 'profile'])->name('profile');
+    Route::post('/profile/update', UpdateProfileController::class)->name('profile-update');
+    Route::get('/profile/password', [PagesController::class, 'ubahPassword'])->name('ubah-password');
+    Route::post('/profile/password/update', UpdatePasswordController::class)->name('password-update');
 });
 
 Route::prefix('admin')->as('admin.')->middleware('is_admin')->group(function () {
@@ -66,5 +72,8 @@ Route::prefix('admin')->as('admin.')->middleware('is_admin')->group(function () 
         'data-buku'             => DataBukuController::class,
         'data-kategori'         => KategoriController::class,
         'data-rak'              => RakController::class,
+        'reset-password'        => ResetPasswordByAdminController::class,
     ]);
+    Route::post('/import-data-anggota', ImportDataAnggotaController::class)->name('import-data-anggota');
+    Route::get('/update-kelas', UpdateKelasController::class)->name('update-kelas');
 });

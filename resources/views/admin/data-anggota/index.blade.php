@@ -14,6 +14,15 @@
         <a href="{{ route('admin.data-anggota.create') }}" class="btn btn-primary" title="Tambah" data-toggle="tooltip">
             <i class="bi bi-plus mr-2"></i> Tambah Data Anggota
         </a>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#basicModal" class="btn btn-info text-white">
+            <i class="bi bi-plus mr-2"></i> Import Data Anggota
+        </button>
+        <a href="{{ asset('format-import-data-anggota.xlsx') }}" class="btn btn-warning text-white" title="Tambah" data-toggle="tooltip">
+            <i class="bi bi-download mr-2"></i> Download Template
+        </a>
+        <a href="{{ route('admin.update-kelas') }}" class="btn btn-secondary text-white" title="Tambah" data-toggle="tooltip">
+            <i class="bi bi-arrow-up mr-2"></i> Perbaharui Kelas
+        </a>
     @endslot
 
     @slot('content')    
@@ -31,6 +40,32 @@
                         <th>No. HP</th>
                     @endslot
                 </x-datatable-component>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Import Data Anggota</h5> 
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('admin.import-data-anggota') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                        <div class="modal-body"> 
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <input class="form-control" type="file" id="formFile" name="file">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"> 
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> 
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     @endslot

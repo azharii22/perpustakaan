@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             User::create([
                 'name'      => 'User'.($i+1),
                 'username'  => 'ID-USER'.($i+1),
+                'kelas'     => random_int(7, 9),
                 'email'     => 'user'.($i+1).'@perpus.com',
                 'is_admin'  => 0,
                 'password'  => bcrypt('123456'),

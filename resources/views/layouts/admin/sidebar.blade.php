@@ -26,6 +26,11 @@
 			<i class="bi bi-menu-button-wide"></i><span>Anggota</span>
 			</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link collapsed" href="{{ route('admin.reset-password.index') }}">
+			<i class="bi bi-menu-button-wide"></i><span>Reset Password</span>
+			</a>
+		</li>
 
 		<li class="nav-heading">Master Data</li>
 

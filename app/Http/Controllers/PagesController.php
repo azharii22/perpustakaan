@@ -29,6 +29,11 @@ class PagesController extends Controller
         return view('siswa.profile.index');
     }
 
+    public function ubahPassword()
+    {
+        return view('siswa.profile.edit-password');
+    }
+
     public function katalog(Request $request)
     {
         $kategori   = DataKategori::all();
@@ -55,5 +60,10 @@ class PagesController extends Controller
         $buku = DataBuku::with('kategori', 'rak')->find($id);
 
         return view('siswa.katalogbuku.show', compact('buku'));
+    }
+
+    public function resetPassword()
+    {
+        return view('auth.reset-password');
     }
 }

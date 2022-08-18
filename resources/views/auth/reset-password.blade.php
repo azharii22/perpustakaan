@@ -8,19 +8,19 @@
                 <h2 data-aos="fade-up my-4">
                     Perpustakaan <br>SMP Negeri Unggulan Sindang
                 </h2>
-                <form method="POST" action="{{ route('login') }}" class="p-4 px-0 justify-content-center" >
+                <form method="POST" action="{{ route('reset-password-post') }}" class="p-4 px-0 justify-content-center" >
                     @csrf
 
-                    @if (Session::has('success'))
+                    @if (Session::has('error'))
                     <div class="row mx-4">
                         <div class="col">
-                            <div class="alert alert-success">
-                                <div>{{ Session::get('success') }}</div>
+                            <div class="alert alert-danger">
+                                <div>{{ Session::get('error') }}</div>
                             </div>
                         </div>
                     </div>
                     @endif
-                    
+
                     <div class="row mb-3 mt-3">
                         <label for="email" class="col-md-4 col-form-label text-md-end text-black">{{ __('ID Anggota / Username') }}</label>
 
@@ -35,32 +35,12 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label for="password" class="col-md-4 col-form-label text-md-end text-black">{{ __('Password') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="password" type="password" class="col-form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
                     
                     <div class="row mb-5">
                         <div class="col-md-12 offset-4">
                             <button type="submit" class="btn btn-primary btn-block">
-                                {{ __('Login') }}
+                                {{ __('Reset Password') }}
                             </button>
-                        </div>
-                    </div>
-
-                    <div class="row mb-0">
-                        <div class="col-md-12 offset-4">
-                            <a href="{{ route('reset-password') }}" class="text-muted"><b><small>Lupa password?</small></b></a>
                         </div>
                     </div>
 

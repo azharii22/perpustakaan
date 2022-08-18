@@ -40,7 +40,12 @@
         <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Kelas</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="kelas">
+                <select name="kelas" id="kelas" class="form-control">
+                    <option selected disabled hidden>--Pilih Kelas--</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
             </div>
         </div>
         <div class="row mb-3">
