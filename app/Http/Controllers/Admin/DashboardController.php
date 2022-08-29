@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $totalKoleksiBuku   = $totalBukuTersedia+$totalBukuDipinjam;
         $totalPeminjamanTerlambat = Peminjaman::dipinjam()->diperpanjang()->terlambat()->count();
         //
-        $aktifitasaPeminjaman = Peminjaman::orderByDesc('created_at')->get()->take(5);
+        $aktifitasaPeminjaman = Peminjaman::with('user', 'buku')->orderByDesc('created_at')->get()->take(5);
         //
         $kategori   = DataKategori::query();
         $labels     = $kategori->pluck('name');

@@ -9,6 +9,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\User;
 use App\Http\Requests\Admin\AnggotaStoreRequest;
 use App\Http\Requests\Admin\AnggotaUpdateRequest;
+use App\Models\TahunAkademik;
 
 class AnggotaController extends Controller
 {
@@ -43,7 +44,9 @@ class AnggotaController extends Controller
                 ->rawColumns(['status', 'action'])
                 ->make();
         }
-        return view('admin.data-anggota.index');
+        $tahun = TahunAkademik::where('status', 1)->first();
+
+        return view('admin.data-anggota.index', compact('tahun'));
     }
 
     /**

@@ -3,7 +3,7 @@
 @section('content')
 <x-admin-page-component>
     @slot('currentPage')
-        Data Anggota
+        Data Anggota Tahun Akademik {{ $tahun->ta }}
     @endslot
 
     @slot('breadcrumb')

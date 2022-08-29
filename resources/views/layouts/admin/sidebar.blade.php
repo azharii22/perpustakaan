@@ -49,5 +49,10 @@
 			<i class="bi bi-menu-button-wide"></i><span>Data Rak</span>
 			</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link collapsed" href="{{ route('admin.tahun-akademik.index') }}">
+			<i class="bi bi-menu-button-wide"></i><span>Tahun Akademik</span>
+			</a>
+		</li>
 	</ul>
 </aside>

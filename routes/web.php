@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\RakController;
 use App\Http\Controllers\Admin\ResetPasswordController as ResetPasswordByAdminController;
 use App\Http\Controllers\Admin\ImportDataAnggotaController;
 use App\Http\Controllers\Admin\UpdateKelasController;
+use App\Http\Controllers\Admin\TahunAkademikController;
 
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SirkulasiController;
@@ -73,6 +74,7 @@ Route::prefix('admin')->as('admin.')->middleware('is_admin')->group(function () 
         'data-kategori'         => KategoriController::class,
         'data-rak'              => RakController::class,
         'reset-password'        => ResetPasswordByAdminController::class,
+        'tahun-akademik'        => TahunAkademikController::class,
     ]);
     Route::post('/import-data-anggota', ImportDataAnggotaController::class)->name('import-data-anggota');
     Route::get('/update-kelas', UpdateKelasController::class)->name('update-kelas');

@@ -88,7 +88,7 @@
         <div class="row mb-3">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <button class="btn btn-secondary">Cancel</button>
+                <a href="{{ route('admin.data-anggota.index') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </div>
 
