@@ -25,6 +25,7 @@ class User extends Authenticatable
         'foto',
         'tanggal_lahir',
         'kelas',
+        'angkatan',
         'phone',
         'address',
         'password',
@@ -53,5 +54,10 @@ class User extends Authenticatable
     public function scopeUser($query)
     {
         return $query->where('is_admin', 0);
+    }
+
+    public function tahunAngkatan()
+    {
+        return $this->belongsTo(TahunAkademik::class, 'angkatan');
     }
 }

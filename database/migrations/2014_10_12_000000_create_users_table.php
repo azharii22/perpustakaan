@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('foto')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('kelas')->nullable();
+            $table->unsignedBigInteger('angkatan')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();

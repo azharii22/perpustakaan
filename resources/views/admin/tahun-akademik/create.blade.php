@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">status</label>
+            <label for="inputText" class="col-sm-2 col-form-label">Status</label>
             <div class="col-sm-10">
                 <select name="status" id="status" class="form-control">
                     <option value="1">Aktif</option>

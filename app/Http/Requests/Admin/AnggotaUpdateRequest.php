@@ -28,6 +28,7 @@ class AnggotaUpdateRequest extends FormRequest
             'username'  => 'required|unique:users,username,'.$this->username.',username',
             'email'     => 'required|unique:users,email,'.$this->email.',email',
             'kelas'     => 'required',
+            'angkatan'  => 'required',
             'tanggal_lahir' => 'required',
             'phone'     => 'nullable|numeric',
             'address'   => 'nullable',

@@ -21,10 +21,13 @@ class AnggotaController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
-            $data = User::user()->withTrashed();
+            $data = User::with('tahunAngkatan')->user()->withTrashed();
 
             return Datatables::of($data)
                 ->addIndexColumn()
+                ->addColumn('angkatan', function ($row) {
+                    return $row->tahunAngkatan->ta;
+                })
                 ->addColumn('status', function ($row) {
                     if (!$row->trashed()) {
                         return '<span class="badge bg-success">Aktif</span>';
@@ -56,7 +59,9 @@ class AnggotaController extends Controller
      */
     public function create()
     {
-        return view('admin.data-anggota.create');
+        $tahun = TahunAkademik::all();
+
+        return view('admin.data-anggota.create', compact('tahun'));
     }
 
     /**
@@ -103,8 +108,9 @@ class AnggotaController extends Controller
     public function edit($id)
     {
         $data_anggota = User::withTrashed()->find($id);
+        $tahun = TahunAkademik::all();
 
-        return view('admin.data-anggota.edit', compact('data_anggota'));
+        return view('admin.data-anggota.edit', compact('data_anggota', 'tahun'));
     }
 
     /**

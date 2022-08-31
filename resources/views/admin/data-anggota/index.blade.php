@@ -20,9 +20,9 @@
         <a href="{{ asset('format-import-data-anggota.xlsx') }}" class="btn btn-warning text-white" title="Tambah" data-toggle="tooltip">
             <i class="bi bi-download mr-2"></i> Download Template
         </a>
-        <a href="{{ route('admin.update-kelas') }}" class="btn btn-secondary text-white" title="Tambah" data-toggle="tooltip">
+        {{-- <a href="{{ route('admin.update-kelas') }}" class="btn btn-secondary text-white" title="Tambah" data-toggle="tooltip">
             <i class="bi bi-arrow-up mr-2"></i> Perbaharui Kelas
-        </a>
+        </a> --}}
     @endslot
 
     @slot('content')    
@@ -35,6 +35,7 @@
                     @slot('columns')
                         <th>ID Anggota</th>
                         <th>Nama</th>
+                        <th>Angkatan</th>
                         <th>Kelas</th>
                         <th>Email</th>
                         <th>No. HP</th>
@@ -86,6 +87,7 @@
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'username', name: 'username'},
                 {data: 'name', name: 'name'},
+                {data: 'angkatan', name: 'angkatan'},
                 {data: 'kelas', name: 'kelas'},
                 {data: 'email', name: 'email'},
                 {data: 'phone', name: 'phone'},

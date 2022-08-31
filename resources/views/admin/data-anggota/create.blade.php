@@ -38,6 +38,17 @@
             </div>
         </div>
         <div class="row mb-3">
+            <label for="inputText" class="col-sm-2 col-form-label">Angkatan</label>
+            <div class="col-sm-10">
+                <select name="angkatan" id="angkatan" class="form-control">
+                    <option selected disabled hidden>--Pilih Tahun Angkatan--</option>
+                    @foreach ($tahun as $item)                        
+                    <option value="{{ $item->id }}">{{ $item->ta }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
             <label for="inputText" class="col-sm-2 col-form-label">Kelas</label>
             <div class="col-sm-10">
                 <select name="kelas" id="kelas" class="form-control">
